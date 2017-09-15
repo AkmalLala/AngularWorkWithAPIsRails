@@ -5,7 +5,7 @@ import 'rxjs/add/operator/map';
 import { Book } from './book.model';
 
 @Injectable()
-export class BooksService {
+export class AuthorsService {
     baseUrl: string = 'http://localhost:3000/';
 
     constructor(private http: Http) { }
@@ -13,7 +13,7 @@ export class BooksService {
     getBooksList(): Observable<Book[]> {
         const url = `${this.baseUrl}api/books`;
         return this.http.get(url)
-        .map(Response => Response.json() as Book[]);
+        .map(Response => Response.json().books as Book[]);
     }
     getBook(id: number): Observable<Book> {
         const url = `${this.baseUrl}api/books/${id}`;

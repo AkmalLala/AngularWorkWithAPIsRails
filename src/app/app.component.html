@@ -1,34 +1,171 @@
-<table class="table table-striped">
-  <thead>
-    <tr>
-      <th>Title</th>
-      <th>Cover</th>
-      <th>Synopsis</th>
-      <th>Author</th>
-      <!-- <th colspan="3">Action</th> -->
-    </tr>
-  </thead>
+<nav class="navbar navbar-default">
+  <div class="container">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#">Angular on Rails</a>
+    </div>
+    <ul class="nav navbar-nav">
+      <li class="active"><a href="#">Home</a></li>
+      <li><a href="#">Page 1</a></li>
+      <li><a href="#">Page 2</a></li>
+      <li><a href="#">Page 3</a></li>
+    </ul>
+  </div>
+</nav>
 
-  <tbody>
-      <tr *ngFor="let book of booksList">
-        <td (click)="getBookInfo(book.id)">{{book.title}}</td>
-        <td class="cover">
-          <img class="img img-thumbnail" src="{{ showImage(book.img) }}">
-        </td>
-        <td>{{book.synopsis}}</td>
-        <td>{{book.authorname}}</td>
-        <!-- <td>link_to 'Show', book, class: "btn btn-default"</td>
-        <td>link_to 'Edit', edit_book_path(book), class: "btn btn-warning"</td>
-        <td>link_to 'Destroy', book, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger"</td> -->
-      </tr>
-  </tbody>
-</table>
-  
+<div class="container">
+    <div class="panel panel-default">
+        <div class="panel-heading">Books Table</div>
+        <div class="panel-body">
+          <!-- Button for show Create Modal -->
+          <button type="button" class="btn btn-info btn-md" data-toggle="modal" data-target="#createModal">
+            New Book
+          </button>
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>Title</th>
+                <th>Cover</th>
+                <!-- <th>Synopsis</th> -->
+                <th>Author</th>
+                <!-- <th colspan="3">Action</th> -->
+              </tr>
+            </thead>
+
+            <tbody>
+                <tr *ngFor="let book of booksList">
+                  <td (click)="getBookInfo(book.id)">
+                    <a href="javascript:void(0);" data-toggle="modal" data-target="#DetailModal">
+                      {{book.title}} 
+                    </a>
+                  </td>
+                  <td>
+                    <img class="img img-thumbnail" src="{{ showImage(book.cover_url.thumb) }}">
+                  </td>
+                  <!-- <td>{{book.synopsis}}</td> -->
+                  <td>{{book.author.name}}</td>
+                  <!-- <td>link_to 'Show', book, class: "btn btn-default"</td>
+                  <td>link_to 'Edit', edit_book_path(book), class: "btn btn-warning"</td>
+                  <td>link_to 'Destroy', book, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger"</td> -->
+                </tr>
+            </tbody>
+          </table>
+    </div>
+  </div>
+</div>
+
+<!-- Modal -->
+<div id="createModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Add New Book</h4>
+      </div>
+      <div class="modal-body">
+        <form class="form-horizontal" enctype="multipart/form-data" action="/books" accept-charset="UTF-8" method="post"><input name="utf8" value="✓" type="hidden"><input name="authenticity_token" value="WnTt6Cjz1BcEzeeXpTGFjnC336ZyXCMlvpIyysBlhURN+zOfgVhAYf/a8pFnBF7i3QZ9Ir5qotD4SpBfk+BYlg==" type="hidden">
+          <div class="form-group">
+            <label class="control-label col-sm-2" for="book_title">Title</label>
+            <div class="col-sm-10">
+              <input id="book_title" class="form-control" name="book[title]" type="text">
+            </div>
+          </div>
+        
+          <div class="form-group">
+            <label class="control-label col-sm-2" for="book_img">Img</label>
+            <div class="col-sm-10">
+              <input id="book_img" class="form-control" name="book[img]" type="file">
+            </div>
+          </div>
+        
+          <div class="form-group">
+            <label class="control-label col-sm-2" for="book_synopsis">Synopsis</label>
+            <div class="col-sm-10">
+              <textarea id="book_synopsis" class="form-control" name="book[synopsis]"></textarea>
+            </div>
+          </div>
+        
+          <div class="form-group">
+            <label class="control-label col-sm-2" for="book_author_id">Author</label>
+            <div class="col-sm-10">
+              <select name="book[author_id]"><option value="">Please select</option>
+              <option value="1">Samsul Amiruddin</option>
+              <option value="2">Kaka Suttejo</option>
+              <option value="3">Erros Candra</option>
+              <option value="6">Fred Heath</option></select>
+            </div>
+            <!-- <input id="book_author_id" type="number" name="book[author_id]" /> -->
+          </div>
+        
+          <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+              <input name="commit" value="Create" class="btn btn-default" data-disable-with="Create" type="submit">
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>
 <div *ngIf='book' class="right-container">
-  <h2>Detail</h2>
-  <p>Judul : {{book.title}}</p>
-  <p>Pembuat : {{book.authorname}}</p>
-  <p>
-  <!-- <img [src]="book.coverImage" [alt]="book.isbn" /> -->
-  </p>
+  <div id="DetailModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+  
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Book Detail</h4>
+        </div>
+        <div class="modal-body">
+          <div class="media">
+            <div class="media-left">
+              <span><i class="glyphicon glyphicon-book"></i></span>
+            </div>
+            <div class="media-body">
+              <label>Judul</label> : {{book.title}}
+            </div>
+          </div>
+          <div class="media">
+            <div class="media-left">
+              <span><i class="glyphicon glyphicon-user"></i></span>
+            </div>
+            <div class="media-body">
+              <label>Pembuat</label> : {{book.author.name}}
+            </div>
+          </div>
+          <div class="media">
+            <div class="media-left">
+              <span><i class="glyphicon glyphicon-comment"></i></span>
+            </div>
+            <div class="media-body">
+              <label>Synopsis</label> :
+              <p class="text-justify">&nbsp;&nbsp;&nbsp;&nbsp;{{book.synopsis}}</p>
+            </div>
+          </div>
+          <!-- <p>
+            <label>Judul</label> : 
+            {{book.title}}
+          </p>
+          <p>
+            <label>Pembuat</label> : 
+            {{book.author.name}}
+          </p>
+          <p>
+            <label>Synopsis</label> : 
+            {{book.synopsis}}
+          </p> -->
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+  
+    </div>
+  </div>
 </div>

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Headers, Http, Response } from '@angular/http';
+import { Observable } from 'rxjs/Rx';
 
 import { Book } from './book.model';
 import { BooksService } from './books.service';
@@ -14,7 +15,8 @@ export class AppComponent implements OnInit {
 
   constructor(private BooksService: BooksService) { }
     ngOnInit() {
-    this.getBooksData();
+      let timer = Observable.timer(0, 5000);
+      timer.subscribe(() => this.getBooksData());
   }
 
   getBooksData() {
@@ -27,7 +29,7 @@ export class AppComponent implements OnInit {
   }
 
   showImage(img: string): string {
-    return "http://railslibrary.herokuapp.com/"+img;
+    return this.BooksService.baseUrl+img;
   }
 
 }
