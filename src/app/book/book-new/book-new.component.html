@@ -1,0 +1,57 @@
+
+<div id="createModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+  
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Add New Book</h4>
+        </div>
+        <div class="modal-body">
+          <form class="form-horizontal" enctype="multipart/form-data" [formGroup]="newBookForm" (ngSubmit) = "onSubmit(newBookForm.value)">
+            <div formGroupName="book">
+              <div class="form-group">
+                <label class="control-label col-sm-2" for="book_title">Title</label>
+                <div class="col-sm-10">
+                  <input id="book_title" class="form-control" name="title" type="text" required formControlName="title">
+                </div>
+              </div>
+            
+              <div class="form-group">
+                <label class="control-label col-sm-2" for="book_img">Img</label>
+                <div class="col-sm-10">
+                  <input id="book_img" class="form-control" name="img" id="img" type="file" required #img formControlName="img" (change)="onFileChange($event)">
+                </div>
+              </div>
+            
+              <div class="form-group">
+                <label class="control-label col-sm-2" for="book_synopsis">Synopsis</label>
+                <div class="col-sm-10">
+                  <textarea id="book_synopsis" class="form-control" name="synopsis" required formControlName="synopsis"></textarea>
+                </div>
+              </div>
+            
+              <div class="form-group">
+                <label class="control-label col-sm-2" for="book_author_id">Author</label>
+                <div class="col-sm-10">
+                  <select name="author_id" required formControlName="author_id"><option value="">Please select</option>
+                    <option *ngFor="let author of authorsList"
+                            value="{{author.id}}">
+                      {{author.name}}
+                    </option>
+                  </select>
+                </div>
+              </div>
+            </div>
+  
+            <button type="submit" class="btn btn-primary">Submit</button>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+  
+    </div>
+  </div>

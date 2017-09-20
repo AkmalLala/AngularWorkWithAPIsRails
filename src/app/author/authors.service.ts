@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Headers, Http, Response } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
-import { Book } from './book.model';
+import { Author } from './author';
 
 @Injectable()
 export class AuthorsService {
@@ -10,14 +10,14 @@ export class AuthorsService {
 
     constructor(private http: Http) { }
 
-    getBooksList(): Observable<Book[]> {
-        const url = `${this.baseUrl}api/books`;
+    getAuthorsList(): Observable<Author[]> {
+        const url = `${this.baseUrl}api/authors`;
         return this.http.get(url)
-        .map(Response => Response.json().books as Book[]);
+        .map(Response => Response.json() as Author[]);
     }
-    getBook(id: number): Observable<Book> {
-        const url = `${this.baseUrl}api/books/${id}`;
+    getAuthor(id: number): Observable<Author> {
+        const url = `${this.baseUrl}api/authors/${id}`;
         return this.http.get(url)
-        .map(Response => Response.json() as Book);
+        .map(Response => Response.json() as Author);
     }
 }
