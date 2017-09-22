@@ -5,6 +5,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { HttpModule } from '@angular/http';
 import { AppComponent } from './app.component';
 import { BookNewComponent } from './book/book-new/book-new.component';
+import { BookEditComponent } from './book/book-edit/book-edit.component';
 import { BooksService } from './book/books.service';
 import { AuthorsService } from './author/authors.service';
 import { HomepageComponent } from './homepage/homepage.component';
@@ -13,7 +14,8 @@ import { HomepageComponent } from './homepage/homepage.component';
   declarations: [
     AppComponent,
     BookNewComponent,
-    HomepageComponent
+    HomepageComponent,
+    BookEditComponent
 ],
   imports: [
     BrowserModule,

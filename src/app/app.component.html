@@ -43,13 +43,21 @@
                   <!-- <td>{{book.synopsis}}</td> -->
                   <td>{{book.author.name}}</td>
                   <td>
-                    <a href="javascript:void(0);"
-                       (click)="getBookInfo(book.id)"
-                       data-toggle="modal"
-                       class="btn btn-warning btn-sm"
-                       data-target="#EditModal">
-                      <span><i class="glyphicon glyphicon-edit"></i></span>
-                    </a>
+                    <div class="btn-group">
+                      <a href="javascript:void(0);"
+                          (click)="getBookInfo(book.id)"
+                          data-toggle="modal"
+                          class="btn btn-warning btn-sm"
+                          data-target="#EditModal">
+                        <span><i class="glyphicon glyphicon-edit"></i></span>
+                      </a>
+                      <a href="javascript:void(0);"
+                          (click)="deleteThisBook(book.id)"
+                          data-toggle="modal"
+                          class="btn btn-danger btn-sm">
+                        <span><i class="glyphicon glyphicon-trash"></i></span>
+                      </a>
+                    </div>
                   </td>
                   <!-- <td>link_to 'Show', book, class: "btn btn-default"</td>
                   <td>link_to 'Edit', edit_book_path(book), class: "btn btn-warning"</td>
@@ -110,66 +118,5 @@
   
     </div>
   </div>
-  <div id="EditModal" class="modal fade" role="dialog">
-    <div class="modal-dialog">
-  
-      <!-- Modal content-->
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">Book Edit</h4>
-        </div>
-        <div class="modal-body">
-          <!-- <form class="form-horizontal" enctype="multipart/form-data" (ngSubmit)="createBook()" accept-charset="UTF-8">
-            <input name="utf8" value="✓" type="hidden"><input name="_method" value="patch" type="hidden"><input name="authenticity_token" value="MU/iEDGIOcS59oa8Cf55w9pkzjN+/XacPbw3ajkesxB++tNupZXDfTpUoLmG5bTNLcsKhe9XZVLoKpcoomBt/Q==" type="hidden">
-          
-            <div class="form-group">
-              <label class="control-label col-sm-2" for="book_title">Title</label>
-              <div class="col-sm-10">
-                <input id="book_title" class="form-control" value="{{book.title}}" name="book[title]" type="text">
-              </div>
-            </div>
-          
-            <div class="form-group">
-              <label class="control-label col-sm-2" for="book_img">Img</label>
-              <div class="col-sm-10">
-                <input id="book_img" class="form-control" name="book[img]" type="file">
-              </div>
-            </div>
-          
-            <div class="form-group">
-              <label class="control-label col-sm-2" for="book_synopsis">Synopsis</label>
-              <div class="col-sm-10">
-                <textarea id="book_synopsis" class="form-control" name="book[synopsis]">{{book.synopsis}}</textarea>
-              </div>
-            </div>
-          
-            <div class="form-group">
-              <label class="control-label col-sm-2" for="book_author_id">Author</label>
-              <div class="col-sm-10">
-                <select name="book[author_id]"><option value="">Please select</option>
-                  <option *ngFor="let author of authorsList"
-                          value="{{author.id}}"
-                          [selected]="author.id == book.author.id">
-                    {{author.name}}
-                  </option>
-              </select>
-              </div>
-              <input id="book_author_id" type="number" value="1" name="book[author_id]" />
-            </div>
-          
-            <div class="form-group">
-              <div class="col-sm-offset-2 col-sm-10">
-                <input name="commit" value="Update" class="btn btn-default" data-disable-with="Update" type="submit">
-              </div>
-            </div>
-          </form> -->
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
-        </div>
-      </div>
-  
-    </div>
-  </div>
+  <app-book-edit [oneBook]="book"></app-book-edit>
 </div>
