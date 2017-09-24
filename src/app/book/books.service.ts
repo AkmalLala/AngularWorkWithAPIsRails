@@ -1,42 +1,26 @@
 import { Injectable } from '@angular/core';
-import { Headers, Http, Response, RequestOptions } from '@angular/http';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { Http, Response } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import { Book } from './book';
 
 @Injectable()
 export class BooksService {
-    headers: Headers;
-    options: RequestOptions;
-    bookList: Book[] = [];
-    baseUrl: string = 'http://localhost:3000/api/books';
+    baseUrl: string = 'http://railslibrary.herokuapp.com/api/books';
 
     constructor(private http: Http) {
-        this.headers = new Headers({'Content-Type':'application/json'});
-        this.options =  new RequestOptions({headers: this.headers});
-    }
-
-    private extractData(res: Response) {
-        let body = res.json();
-              return body.data || {};
-      }
-    
-    private handleErrorObservable (error: Response | any) {
-        console.error(error.message || error);
-        return Observable.throw(error.message || error);
     }
     
     getBooksList(): Observable<Book[]> {
         const url = `${this.baseUrl}`;
         return this.http.get(url)
-        .map(Response => Response.json() as Book[]);
+                        .map(Response => Response.json() as Book[]);
     }
 
     getBook(id: number): Observable<Book> {
         const url = `${this.baseUrl}/${id}`;
         return this.http.get(url)
-        .map(Response => Response.json() as Book);
+                        .map(Response => Response.json() as Book);
     }
 
     addBook(book: Book): Observable<Book> {
@@ -57,6 +41,16 @@ export class BooksService {
         return this.http.delete(url)
                         .map(this.extractData)
                         .catch(this.handleErrorObservable);
+    }
+    
+    private extractData(res: Response) {
+        let body = res.json();
+                return body.data || {};
+        }
+    
+    private handleErrorObservable (error: Response | any) {
+        console.error(error.message || error);
+        return Observable.throw(error.message || error);
     }
     
 }

@@ -1,122 +1,30 @@
-<nav class="navbar navbar-default">
-  <div class="container">
+<nav class="navbar navbar-info">
+  <div class="container-fluid">
     <div class="navbar-header">
-      <a class="navbar-brand" href="#">Angular Library</a>
+      <a class="navbar-brand" routerLink='/'>Angular Library</a>
     </div>
     <ul class="nav navbar-nav">
-      <li class="active"><a href="#">Home</a></li>
-      <li><a href="#">Book</a></li>
-      <li><a href="#">Author</a></li>
+      <li [routerLinkActive]="['active']">
+        <a [routerLink]="['home']">Home</a>
+      </li>
+      <li [routerLinkActive]="['active']">
+        <a [routerLink]="['authors']">Author</a>
+      </li>
+      <li [routerLinkActive]="['active']">
+        <a [routerLink]="['books']">Book</a>
+      </li>
     </ul>
   </div>
 </nav>
 
 <div class="container">
-    <div class="panel panel-default">
-        <div class="panel-heading">Books Table</div>
-        <div class="panel-body">
-          <!-- Button for show Create Modal -->
-          <button type="button" class="btn btn-info btn-md" data-toggle="modal" data-target="#createModal">
-            New Book
-          </button>
-          <table class="table table-striped">
-            <thead>
-              <tr>
-                <th>Cover</th>
-                <th>Title</th>
-                <!-- <th>Synopsis</th> -->
-                <th>Author</th>
-                <th colspan="3">Action</th>
-              </tr>
-            </thead>
-
-            <tbody>
-                <tr *ngFor="let book of booksList">
-                  <td>
-                    <img class="img img-thumbnail" src="{{ showImage(book.cover_url.thumb) }}">
-                  </td>
-                  <td (click)="getBookInfo(book.id)">
-                    <a href="javascript:void(0);" data-toggle="modal" data-target="#DetailModal">
-                      {{book.title}} 
-                    </a>
-                  </td>
-                  <!-- <td>{{book.synopsis}}</td> -->
-                  <td>{{book.author.name}}</td>
-                  <td>
-                    <div class="btn-group">
-                      <a href="javascript:void(0);"
-                          (click)="getBookInfo(book.id)"
-                          data-toggle="modal"
-                          class="btn btn-warning btn-sm"
-                          data-target="#EditModal">
-                        <span><i class="glyphicon glyphicon-edit"></i></span>
-                      </a>
-                      <a href="javascript:void(0);"
-                          (click)="deleteThisBook(book.id)"
-                          data-toggle="modal"
-                          class="btn btn-danger btn-sm">
-                        <span><i class="glyphicon glyphicon-trash"></i></span>
-                      </a>
-                    </div>
-                  </td>
-                  <!-- <td>link_to 'Show', book, class: "btn btn-default"</td>
-                  <td>link_to 'Edit', edit_book_path(book), class: "btn btn-warning"</td>
-                  <td>link_to 'Destroy', book, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger"</td> -->
-                </tr>
-            </tbody>
-          </table>
-    </div>
-  </div>
+  <router-outlet></router-outlet>
 </div>
 
-<!-- Modal -->
-<app-new-book></app-new-book>
-<div *ngIf='book' class="container">
-  <div id="DetailModal" class="modal fade" role="dialog">
-    <div class="modal-dialog">
-  
-      <!-- Modal content-->
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">Book Detail</h4>
-        </div>
-        <div class="modal-body">
-
-          <div class="media">
-            <div class="media-left">
-              <span><i class="glyphicon glyphicon-book"></i></span>
-            </div>
-            <div class="media-body">
-              <label>Judul</label> : {{book.title}}
-            </div>
-          </div>
-          <div class="media">
-            <div class="media-left">
-              <span><i class="glyphicon glyphicon-user"></i></span>
-            </div>
-            <div class="media-body">
-              <label>Pembuat</label> : {{book.author.name}}
-            </div>
-          </div>
-          <div class="media">
-            <div class="media-left">
-              <span><i class="glyphicon glyphicon-comment"></i></span>
-            </div>
-            <div class="media-body">
-              <label>Synopsis</label> :
-              <p class="text-justify">&nbsp;&nbsp;&nbsp;&nbsp;{{book.synopsis}}</p>
-            </div>
-          </div>
-
-        </div>
-
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        </div>
-      </div>
-  
+<div class="container">
+  <footer class="footer">
+    <div class="container">
+        <p>&copy; 2016 Company, Inc. &middot; <a href="#">Privacy</a> &middot; <a href="#">Terms</a></p>    
     </div>
-  </div>
-  <app-book-edit [oneBook]="book"></app-book-edit>
+  </footer>
 </div>

@@ -1,4 +1,4 @@
-import { Component, OnInit, Injectable, ViewChild } from '@angular/core';
+import { Component, OnInit, Injectable, ViewChild, ElementRef } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 import { Observable } from 'rxjs/Rx';
 import { Http, Response } from '@angular/http';
@@ -19,10 +19,9 @@ export class BookNewComponent implements OnInit {
   authorsList: Author[] = [];
   author: Author;
   bookList: Book[] = [];
-  submitted: boolean = false; // check if form is submitted
-  bookUrl: string = 'http://localhost:3000/api/books';
+  FakeUrl: string = 'http://www.janklowandnesbit.co.uk/sites/default/files/imagecache/large/imagefield_default_images/default_book_cover.jpg';
 
-  @ViewChild('img') BookCover;
+  @ViewChild('img') BookCover: ElementRef;
   constructor(private http: Http, private formBuilder: FormBuilder, private BooksService: BooksService, private AuthorsService: AuthorsService) {}
 
   ngOnInit() {
@@ -32,7 +31,7 @@ export class BookNewComponent implements OnInit {
     this.newBookForm = this.formBuilder.group({
       book : this.formBuilder.group({
         title: [null, Validators.required],
-        img: [],
+        img: [null, Validators.required],
         synopsis: [null, Validators.required],
         author_id: [null, Validators.required]
       })
@@ -43,15 +42,20 @@ export class BookNewComponent implements OnInit {
     this.AuthorsService.getAuthorsList()
     .subscribe(authors => this.authorsList = authors);
   }
-  
-  getAuthorInfo(id: number) {
-    this.AuthorsService.getAuthor(id)
-    .subscribe(author => this.author = author);
-  }
 
-  onFileChange(event) {
-    if(event.target.files.length > 0) {
-      let file = event.target.files[0];
+  onFileChange() {
+    let fileInput = this.BookCover.nativeElement;
+
+    if(fileInput.files.length > 0) {
+      let reader = new FileReader();
+      
+      reader.onloadend = (fileInput) => {
+        this.FakeUrl = reader.result;
+      }
+
+      reader.readAsDataURL(fileInput.files[0]);
+
+      let file = fileInput.files[0];
       this.newBookForm.get('book.img').setValue(file);
     }
   }
